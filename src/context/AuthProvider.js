@@ -1,30 +1,26 @@
 import { createContext, useState } from "react";
+import Cookies from "js-cookie";
 export const AuthContext = createContext();
 
 export const ProvideAuth = ({ children }) => {
-  const getSession = () => {
-    return JSON.parse(localStorage.getItem("session"));
+  const [auth, setAuth] = useState(Cookies.get("authorizatiom"));
+  const [profile, setProfile] = useState(null);
+
+  const value = {
+    auth,
+    setAuth: (value) => {
+      setAuth(value);
+      Cookies.set("authorization", value, { expires: 1 });
+    },
+    profile,
+    setProfile,
   };
 
-  /**
-   * setToken from localstorage
-   */
-
-  const setSessionInLocalStorage = (token) => {
-    localStorage.setItem("session", JSON.stringify(token));
-    return true;
-  };
-
-  const auth = getSession();
-  const [session, setSession] = useState(auth || "");
-  const setAuth = (token) => {
-    setSession(token);
-    setSessionInLocalStorage(token);
-  };
-  const { user, token } = session;
-  return (
-    <AuthContext.Provider value={{ user, token, setAuth }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
+export default AuthContext;
+
+/**
+ * setToken from localstorage
+ */
