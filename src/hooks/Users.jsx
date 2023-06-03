@@ -1,6 +1,8 @@
 import  { useEffect, useState } from 'react'
-import axios from "../api/axios";
+import axios from 'axios';
 import  Cookies  from 'js-cookie';
+import './Users.scss'
+import { Link } from 'react-router-dom';
 function Users() {
     const [userlist,setUesrlist] = useState("")
     const [loading,setLoading] = useState(false)
@@ -8,41 +10,57 @@ function Users() {
     
     // const authorization= JSON.parse(Co.getItem('authorization'))
 
-    const authorization = Cookies.get("authorization")
     
     useEffect(() =>{
+        const authorization = Cookies.get("authorization")
         const fetchUserList = async () => {
             setLoading(true)
             setError(null)
             console.log(authorization);
             try{
-                const response = await axios.get('/moodle/user/student/all?pageNum=1&pageSize=15',{
-                    headers:{
-                        Authorization:`bearer ${authorization}`,
-                    },
-                });
-                setUesrlist(response.data)
+                let headersList = {
+                    // "Accept": "*/*",
+                    // "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+                    "Authorization": `Bearer ${authorization}`
+                   }
+                   
+                   let reqOptions = {
+                     url: "https://kaaryar.hossein.codes/moodle/user/student/all?pageNum=1&pageSize=15",
+                     method: "GET",
+                     headers: headersList,
+                   }
+                   
+                   let response = await axios.request(reqOptions);
+                   setUesrlist(response.data);  
+                   console.log(response.data);
             }catch (error){
                 setError(error.message)
             }
             setLoading(false)
         };
         fetchUserList();
-    },[authorization])
+    },[])
 
     const  renderUserlist = () =>{
+        
         if(!userlist){
+            
             return null
         }
     
   return (
-    <div>
+    <>
+    <div className='list-user'>
         {userlist.map((user) =>(
-            <div key={user.id}>
-                <div>{user.id}</div>
+            <div key={user.id} className='user'>
+                <div className='name'>{user.username} {user.lastname}</div>
+                <div className='email'>{user.email}</div>
+                <Link to={`${user.id}`}><button className='button'>Click Me</button></Link>
+
             </div>
         ))}
     </div>
+    </>
   )
 }
 return(
