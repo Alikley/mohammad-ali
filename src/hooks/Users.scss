@@ -1,0 +1,29 @@
+.list-user{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 55px;
+    gap: 2rem;
+    .user{
+        text-align: center ;
+        border-radius:10px ;
+        .name{
+            font-size: 1.3em;
+            padding: .2em;
+
+        }
+        .email{
+            font-size: 1em;
+        }
+        .button{
+            background-color:rgb(72, 137, 8) ;
+            color: aliceblue;
+            border-radius: 10px;
+            border: none;
+            padding: .5em;
+            margin: .5em;
+        }
+        &:hover{
+            background-color: rgb(193, 204, 214);
+        }
+    }
+}
