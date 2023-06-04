@@ -1,21 +1,23 @@
-import React from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Users from '../../hooks/Users'
+import { useContext } from 'react';
+import { LoginContext } from '../../context/LoginContext';
+import Nav from 'react-bootstrap/Nav';
+import './Panel.scss'
 
-function Panel({islogin,logout}) {
-
+function Panel() {
+    const userLog = useContext(LoginContext)
   return (
 
         <>
-            {
-                islogin !== true?
-                <Navigate to="/login" replace={true} />
-                :
                 <main className='panel'>
-                    <Link to="/login" onClick={() => logout()}>خارج شدن</Link>
-                    <Users />
+                <div class="topnav">
+                        <Link to="/login" onClick={userLog.logout} className='link'>خارج شدن</Link>
+                        <Link to="/users" className='link'>لیست مهارت اموز</Link>
+                </div>
+                    
                 </main>
-            }
+            
         </>
 
   )
