@@ -1,12 +1,14 @@
-import  {  useState,useEffect } from 'react'
+import  {  useState,useEffect, useContext } from 'react'
 import axios from 'axios'
 import './Login.scss'
-import { useAuth } from '../../hooks/use'
+import { useAuth } from '../../context/Roless'
+import { LoginContext } from '../../context/LoginContext'
 import  Cookies from 'js-cookie'
-function Login({setIslogin}) {
+function Login() {
 
+    const userLog = useContext(LoginContext)
     const [error, setError] = useState(false)
-    const { setAuth } = useAuth();
+    const {setFirst } = useAuth();
     const [user, setUser] = useState('')
     const [pwd, setPwd] = useState('')
 
@@ -18,7 +20,7 @@ function Login({setIslogin}) {
       
       const haandlesubmit = async (e) =>{
           e.preventDefault();
-          setIslogin(true)
+          userLog.login()
           setUser('');
           setPwd('');
           
@@ -41,9 +43,15 @@ function Login({setIslogin}) {
                console.log(response.data);
 
                if(response.data&& response.data.access_token){
-                Cookies.set('authorization', ` ${response.data.access_token}`)
-                localStorage.setItem('authorization , roles' ,JSON.stringify(`UserName:${response.data.profile.username},UseRoles:${response.data.profile.roles}`))
+                Cookies.set('authorization', `${response.data.access_token}`)
+                JSON.parse(localStorage.getItem(setFirst(response.data.profile)))
+        
+
+                // localStorage.setItem('authorization , roles' ,JSON.stringify(`UserName:${response.data.profile.username},UseRoles:${response.data.profile.roles}`))
                 // setAuth(response.data)
+                console.log(response);
+                console.log(reqOptions);
+                
                }
 
                 }catch (error) {
@@ -57,6 +65,7 @@ function Login({setIslogin}) {
                     }
                 }
                     }
+                    
        
   return (
 
