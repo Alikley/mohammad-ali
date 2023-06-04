@@ -6,7 +6,7 @@ import { useParams,useNavigate } from 'react-router-dom';
 function User() {
     const [userlist,setUesrlist] = useState("")
     // const [loading,setLoading] = useState(false)
-    const [error,setError] = useState("")
+    const [,setError] = useState("")
     const navigate = useNavigate();
     let {userId} = useParams()
     
@@ -51,7 +51,7 @@ function User() {
     <div className='list-user'>
 
         <h1>User {userId}</h1>
-        <button onClick={()=>navigate("/panel")}>برگشت</button>
+        <button onClick={()=>navigate("/users")}>برگشت</button>
         {userlist?
              <div className='user' style={{background:"#efefef"}}>
                 <div className='name' style={{color:"red"}}>{userlist.firstName} {userlist.lastname} </div>
