@@ -2,11 +2,13 @@ import  { useEffect, useState } from 'react'
 import axios from 'axios';
 import  Cookies  from 'js-cookie';
 import './Users.scss'
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 function Users() {
     const [userlist,setUesrlist] = useState("")
     const [loading,setLoading] = useState(false)
     const [error,setError] = useState("")
+    const navigate = useNavigate();
+
     
     // const authorization= JSON.parse(Co.getItem('authorization'))
 
@@ -51,6 +53,8 @@ function Users() {
   return (
     <>
     <div className='list-user'>
+    <button onClick={()=>navigate("/panel")}>برگشت</button>
+
         {userlist.map((user) =>(
             <div key={user.id} className='user'>
                 <div className='name'>{user.username} {user.lastname}</div>
