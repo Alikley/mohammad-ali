@@ -1,9 +1,14 @@
 import {Container,Nav ,Navbar,NavDropdown } from 'react-bootstrap/';
 import Admin from '../../../hooks/Admin';
-import { useAuth } from '../../../context/Roless';
+// import { useAuth } from '../../../context/Roless';
 import { NavLink } from 'react-router-dom';
-function Header({islogin}) {
-  const { first , setProfile } = useAuth();
+import { LoginContext } from '../../../context/LoginContext';
+import { useContext } from 'react';
+
+function Header() {
+  // const { first , setProfile } = useAuth();
+  const userLog = useContext(LoginContext)
+
 
   return (
     <div>
@@ -13,8 +18,8 @@ function Header({islogin}) {
           <Nav className="me-auto">
            <Nav.Link> <NavLink to="/">خانه</NavLink></Nav.Link>
             {
-              islogin?
-              <NavLink to="/panel">لیست مهارت اموز</NavLink>
+              userLog.islogin?
+              <NavLink to="/panel"> پنل</NavLink>
               :
               <NavLink to="/login">ورود</NavLink>
 
