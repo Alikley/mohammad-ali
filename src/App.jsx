@@ -4,34 +4,38 @@ import Layout from './components/layout/Layout'
 import Home from './components/home/Home';
 import Login from './components/login/Login';
 import Panel from './components/panel/Panel';
-import { useState } from 'react';
+import { useContext } from 'react';
 import User from './hooks/User';
+import { LoginContext } from './context/LoginContext';
+import Users from './hooks/Users';
 
 
 
 function App() {
-  const [islogin, setIslogin] = useState(false)
+  const userLog = useContext(LoginContext)
 
   return (
     <div className="App">
       <Routes>
-      <Route  element={<Layout islogin={islogin} />}>
+      <Route  element={<Layout  />}>
        <Route index path='/' element={<Home  />} />
        <Route index path='/login' element={
-         islogin?
+         userLog.islogin?
          <Navigate to='/panel' replace={true} />
          :
-         <Login islogin={islogin} setIslogin={setIslogin}/>
+         <Login />
        } />
        <Route index path='/panel' element={
-        islogin?
-       <Panel islogin={islogin} logout={() =>setIslogin(false)}/>
+        userLog.islogin?
+       <Panel  />
        
 :
         <Navigate to='/login' replace={true} />
 
 }/>
-       <Route  path='panel/:userId' element={<User />} />
+       <Route  path='/users' element={<Users />} />
+       
+       <Route  path='/users/:userId' element={<User />} />
 
       </Route>
     </Routes>
