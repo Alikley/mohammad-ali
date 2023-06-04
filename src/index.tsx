@@ -5,7 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ProvideAuth } from '../src/context/AuthProvider';
+import { Provideroles2 } from '../src/context/Roless';
+import LoginProvider from './context/LoginContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,9 +15,11 @@ root.render(
   
   <React.StrictMode>
     <BrowserRouter>
-      <ProvideAuth>
-        <App />
-      </ProvideAuth>
+      <Provideroles2>
+        <LoginProvider>
+          <App />
+        </LoginProvider>
+      </Provideroles2>
     </BrowserRouter>
   </React.StrictMode>
 );
